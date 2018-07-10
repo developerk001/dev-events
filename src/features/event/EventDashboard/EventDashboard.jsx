@@ -73,6 +73,16 @@ class EventDashboard extends Component {
     });
   };
 
+  addEvent = event => {
+    console.log(this.state.events.length);
+    event.id = this.state.events.length + 1;
+    event.hostPhotoURL = "/public/assets/user.png";
+    this.setState({
+      events: [...this.state.events, event],
+      isOpen: false
+    });
+  };
+
   render() {
     return (
       <Grid>
@@ -81,7 +91,9 @@ class EventDashboard extends Component {
         </Grid.Column>
         <Grid.Column width={6}>
           <Button onClick={this.showForm} positive content="Create Event" />
-          {this.state.isOpen && <EventForm closeForm={this.closeForm} />}
+          {this.state.isOpen && (
+            <EventForm addEvent={this.addEvent} closeForm={this.closeForm} />
+          )}
         </Grid.Column>
       </Grid>
     );
