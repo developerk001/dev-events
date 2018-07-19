@@ -1,34 +1,13 @@
 import React, { Component } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
-
-const emptyEvent = {
-  title: "",
-  date: "",
-  city: "",
-  venue: "",
-  hostedBy: ""
-};
+import { connect } from "react-redux";
+import { createEvent, updateEvent } from "../eventActions";
+import cuid from "cuid";
 
 class EventForm extends Component {
   state = {
-    event: emptyEvent
+    event: Object.assign({}, this.props.event)
   };
-
-  componentDidMount() {
-    if (this.props.selectedEvent !== null) {
-      this.setState({
-        event: this.props.selectedEvent
-      });
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedEvent !== this.props.selectedEvent) {
-      this.setState({
-        event: nextProps.selectedEvent || emptyEvent
-      });
-    }
-  }
 
   onInputChange = event => {
     const newEvent = this.state.event;
@@ -42,13 +21,19 @@ class EventForm extends Component {
     event.preventDefault();
     if (this.state.event.id) {
       this.props.updateEvent(this.state.event);
+      this.props.history.goBack();
     } else {
-      this.props.addEvent(this.state.event);
+      const newEvent = {
+        ...this.state.event,
+        id: cuid(),
+        hostPhotoURL: "/assets/user.png"
+      };
+      this.props.createEvent(newEvent);
+      this.props.history.push("/events");
     }
   };
 
   render() {
-    const { closeForm } = this.props;
     const { event } = this.state;
     return (
       <Segment>
@@ -102,7 +87,7 @@ class EventForm extends Component {
           <Button positive type="submit">
             Submit
           </Button>
-          <Button onClick={closeForm} type="button">
+          <Button onClick={this.props.history.goBack} type="button">
             Cancel
           </Button>
         </Form>
@@ -111,4 +96,23 @@ class EventForm extends Component {
   }
 }
 
-export default EventForm;
+export default connect(
+  (state, ownProps) => {
+    const eventId = ownProps.match.params.id;
+    let event = {
+      title: "",
+      date: "",
+      city: "",
+      venue: "",
+      hostedBy: ""
+    };
+    if (eventId && state.events.length > 0) {
+      event = state.events.filter(event => event.id === eventId)[0];
+    }
+    return { event };
+  },
+  {
+    createEvent,
+    updateEvent
+  }
+)(EventForm);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react/dist/commonjs";
 
 import EventDashboard from "../../features/event/EventDashboard/EventDashboard";
 import NavBar from "../../features/nav/NavBar/NavBar";
@@ -10,6 +10,7 @@ import UserDetailedPage from "../../features/user/UserDetailed/UserDetailedPage"
 import PeopleDashboard from "../../features/user/PeopleDashboard/PeopleDashboard";
 import EventDetailedPage from "../../features/event/EventDetailed/EventDetailedPage";
 import HomePage from "../../features/home/HomePage";
+import TestComponent from "../../features/test/TestComponent";
 
 // TODO: Checkout Interactive Playground && Playaround with setting specific
 
@@ -23,21 +24,21 @@ class App extends Component {
         <Route
           path="/(.+)"
           render={() => {
-            return (
-              <div>
+            return <div>
                 <NavBar />
                 <Container className="main">
                   <Switch>
+                    <Route path="/test" component={TestComponent} />
                     <Route path="/events" component={EventDashboard} />
                     <Route path="/event/:id" component={EventDetailedPage} />
+                    <Route path="/manage/:id" component={EventForm} />
                     <Route path="/people" component={PeopleDashboard} />
                     <Route path="/profile/:id" component={UserDetailedPage} />
                     <Route path="/settings" component={SettingsDashboard} />
                     <Route path="/createEvent" component={EventForm} />
                   </Switch>
                 </Container>
-              </div>
-            );
+              </div>;
           }}
         />
       </div>

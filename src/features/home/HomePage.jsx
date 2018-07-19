@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomePage = ({history}) => {
+const HomePage = ({ history }) => {
   return (
     <div>
       <div className="ui inverted vertical masthead center aligned segment">
@@ -15,7 +15,7 @@ const HomePage = ({history}) => {
           </h1>
           <h2>Do whatever you want to do</h2>
           <div
-            onClick={() => history.push('/events')}
+            onClick={() => history.push("/events")}
             className="ui huge white inverted button"
           >
             Get Started
