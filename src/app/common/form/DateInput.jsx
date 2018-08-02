@@ -11,7 +11,7 @@ const DateInput = ({ input: { value, onChange }, width, placeholder, meta: {touc
         {...rest}
         placeholderText={placeholder}
         selected={value ? moment(value) : null}
-        onChange={onChange} 
+        onChange={onChange}
       />
       {touched && error && <Label basic color="red">{error}</Label>}
     </Form.Field>

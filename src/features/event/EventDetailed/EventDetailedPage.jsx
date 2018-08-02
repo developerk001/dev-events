@@ -8,6 +8,7 @@ import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedSidebar from "./EventDetailedSidebar";
 
 const EventDetailedPage = ({ event }) => {
+  console.log(event)
   return (
     <Grid>
       <Grid.Column width={10}>
