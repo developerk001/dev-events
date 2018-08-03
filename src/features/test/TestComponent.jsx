@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 
 import { incrementCounter, decrementCounter } from "./testActions";
+import { openModal } from "../modals/modalActions";
 
 const mapStateToProps = state => ({
   data: state.test.age
@@ -10,12 +11,10 @@ const mapStateToProps = state => ({
 
 class TestComponent extends Component {
   render() {
-    const { incrementCounter, decrementCounter } = this.props;
+    const { openModal } = this.props;
     return (
       <div>
-        <h1>age is {this.props.data}</h1>
-        <Button onClick={incrementCounter} positive content="+" />
-        <Button onClick={decrementCounter} negative content="-" />
+        <Button onClick={() => openModal('TestModal', { age: 42 })} positive content="Open Modal" />
       </div>
     );
   }
@@ -25,6 +24,7 @@ export default connect(
   mapStateToProps,
   {
     incrementCounter,
-    decrementCounter
+    decrementCounter,
+    openModal
   }
 )(TestComponent);
