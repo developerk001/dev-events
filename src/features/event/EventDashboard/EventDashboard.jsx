@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import EventList from "../EventList/EventList";
 import { deleteEvent } from "../eventActions";
-
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 class EventDashboard extends Component {
   showForm = () => {
     this.setState({
@@ -18,14 +18,12 @@ class EventDashboard extends Component {
   };
 
   render() {
-    const { events } = this.props;
+    const { events, loading } = this.props;
+    if (loading) return <LoadingComponent inverted={true} />;
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventList
-            deleteEvent={this.deleteEvent}
-            events={events}
-          />
+          <EventList deleteEvent={this.deleteEvent} events={events} />
         </Grid.Column>
         <Grid.Column width={6} />
       </Grid>
@@ -34,7 +32,10 @@ class EventDashboard extends Component {
 }
 
 export default connect(
-  state => ({ events: state.events }),
+  state => ({
+    events: state.events,
+    loading: state.async.loading
+  }),
   {
     deleteEvent
   }

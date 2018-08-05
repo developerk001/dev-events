@@ -1,8 +1,9 @@
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from "./testContstants";
+import { INCREMENT_COUNTER, DECREMENT_COUNTER, COUNTER_ACTION_STARTED, COUNTER_ACTION_FINISHED } from "./testContstants";
 import { createReducer } from "../../app/common/util/reducerUtil.jsx";
 
 const initialState = {
-  age: 18
+  age: 18,
+  loading: false
 };
 
 export const incrementCounter = (state, payload) => {
@@ -19,8 +20,18 @@ export const decrementCounter = (state, payload) => {
   };
 };
 
+export const counterActionStarted = (state, payload) => {
+  return {...state, loading: true}
+}
+
+export const counterActionFinished = (state, payload) => {
+  return {...state, loading: false}
+}
+
 export default createReducer(initialState, {
   [INCREMENT_COUNTER]: incrementCounter,
-  [DECREMENT_COUNTER]: decrementCounter
+  [DECREMENT_COUNTER]: decrementCounter,
+  [COUNTER_ACTION_STARTED]: counterActionStarted,
+  [COUNTER_ACTION_FINISHED]: counterActionFinished
 });
 

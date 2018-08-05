@@ -9,10 +9,11 @@ import "./index.css";
 import App from "./app/layout/App";
 import { configureStore } from "./app/store/configureStore";
 import ScrollToTop from "./app/common/util/ScrollToTop";
-
 import registerServiceWorker from "./registerServiceWorker";
+import { loadEvents } from './features/event/eventActions';
 
 const store = configureStore();
+store.dispatch(loadEvents())
 
 let rootEl = document.querySelector("#root");
 

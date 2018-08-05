@@ -2,19 +2,32 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { incrementCounter, decrementCounter } from "./testActions";
+import { incrementAsync, decrementAsync } from "./testActions";
 import { openModal } from "../modals/modalActions";
 
 const mapStateToProps = state => ({
-  data: state.test.age
+  age: state.test.age,
+  loading: state.test.loading
 });
 
 class TestComponent extends Component {
   render() {
-    const { openModal } = this.props;
+    const { incrementAsync, decrementAsync, openModal, loading } = this.props;
     return (
       <div>
-        <Button onClick={() => openModal('TestModal', { age: 42 })} positive content="Open Modal" />
+        <p>{!loading && this.props.age}</p>
+
+        <Button
+          onClick={() =>
+            openModal("TestModal", {
+              age: 42
+            })
+          }
+          positive
+          content="Open Modal"
+        />
+        <Button loading={loading} onClick={incrementAsync} positive content="Increment Async" />
+        <Button loading={loading} onClick={decrementAsync} negative content="Decrement Async" />
       </div>
     );
   }
@@ -23,8 +36,8 @@ class TestComponent extends Component {
 export default connect(
   mapStateToProps,
   {
-    incrementCounter,
-    decrementCounter,
+    incrementAsync,
+    decrementAsync,
     openModal
   }
 )(TestComponent);
